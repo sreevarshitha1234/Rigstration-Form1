@@ -11,13 +11,13 @@ pipeline
 	stages{
 		stage('Code Checkout'){
 			steps{
-				git branch: 'main', url: 'https://github.com/Devops9AM/Rigstration-Form.git'
+				git branch: 'main', url: 'https://github.com/sreevarshitha1234/Rigstration-Form.git'
 
 			}
 		}
        stage("SonarQube analysis") {
             steps {
-              withSonarQubeEnv('DevOps-Project-2') {
+              withSonarQubeEnv('war-deploy') {
                 sh 'mvn clean install sonar:sonar'
               }
             }
@@ -74,7 +74,7 @@ pipeline
 	    stage ('DEV Deploy to Tomcat')  {
 	        steps{
         echo "deploying to DEV Env "
-        deploy adapters: [tomcat9(credentialsId: 'war-deploy-to-tomcat', path: '', url: 'http://192.168.10.169:8080')], contextPath: null, war: '**/*.war'
+        deploy adapters: [tomcat9(credentialsId: 'war-deploy-to-tomcat', path: '', url: 'http://192.168.121.140:8080')], contextPath: null, war: '**/*.war'
         }
         }
 	stage('Copying Packge'){
@@ -84,7 +84,7 @@ pipeline
 		}
 	stage('Build docker image') {
             steps {  
-                sh 'docker build -t thanish/registration-form:$BUILD_NUMBER .'
+                sh 'docker build -t sree693/registration-form:$BUILD_NUMBER .'
             }
         }
         
@@ -95,7 +95,7 @@ pipeline
         }
         stage('push image') {
             steps{
-                sh 'docker push thanish/registration-form:$BUILD_NUMBER'
+                sh 'docker push sree693/registration-form:$BUILD_NUMBER'
             }
         }
 		
