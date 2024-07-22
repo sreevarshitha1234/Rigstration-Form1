@@ -24,7 +24,12 @@
    <repository>
             <id>deployment</id>
             <name>Internal Releases</name>
-            <url>http://http://52.66.209.43/:8081/repository/cloudgen-repo/</url>
+            <url>http://http://52.66.209.43:8081/repository/Cloud-Gen-Release/</url>
+             <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Snapshot Releases</name>
+            <url>http://http://52.66.209.43:8081/repository/Cloud-Gen-Snap/</url>
+        </snapshotRepository>
         </repository>
     <site>
       <id>site-server</id>
