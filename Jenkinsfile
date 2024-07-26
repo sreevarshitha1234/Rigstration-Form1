@@ -74,12 +74,12 @@ pipeline
 	    stage ('DEV Deploy to Tomcat')  {
 	        steps{
         echo "deploying to DEV Env "
-        deploy adapters: [tomcat9(credentialsId: 'war-deploy-tomcat', path: '', url: 'http://192.168.121.140:8080')], contextPath: null, war: '**/*.war'
+        deploy adapters: [tomcat9(credentialsId: 'war-deploy-tomcat', path: '', url: 'http://13.201.28.175:8080')], contextPath: null, war: '**/*.war'
         }
         }
 	stage('Copying Packge'){
 			steps{
-				sh 'cp /var/lib/jenkins/workspace/war-build-nd-deploy-into-tomcat/webapp/target/webapp-1.war /var/lib/jenkins/workspace/war-build-nd-deploy-into-tomcat/'
+				sh 'cp /root/.jenkins/workspace/war-deploy/webapp/target/webapp-1.war /root/.jenkins/workspace/war-deploy/'
 			}
 		}
 	stage('Build docker image') {
