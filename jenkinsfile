@@ -1,0 +1,78 @@
+pipeline
+{
+	agent any
+	tools
+	{
+	maven "maven"
+	}
+	stages{
+		stage('Code Checkout'){
+			steps{
+				git branch: 'main', url: 'https://github.com/sreevarshitha1234/Rigstration-Form.git'
+
+			}
+		}
+       stage("SonarQube analysis") {
+            steps {
+              withSonarQubeEnv('war-deploy') {
+                sh 'mvn clean install sonar:sonar'
+              }
+            }
+          }
+
+        stage('Maven Plugins Install'){
+		steps{
+				sh 'mvn install'
+			}
+				}
+
+		stage('Code Verify by Maven'){
+			steps{
+				sh 'mvn verify'
+			}
+		}
+
+		 stage('Maven Code Validate'){
+			steps{
+				sh 'mvn validate'
+			}
+		}
+
+		 stage('Code Test by Maven'){
+			steps{
+				sh 'mvn test'
+			}
+		}
+
+		 stage('Code Compile by Maven'){
+			steps{
+				sh 'mvn compile'
+			}
+		}
+
+		 stage('Cleaning the Old Artifact'){
+			steps{
+				sh 'mvn clean'
+			}
+		}
+
+        stage('War Build'){
+			steps{
+				sh 'mvn package'
+			}
+		}
+
+		stage('Deploy War to Nexus'){
+			steps{
+			sh 'mvn deploy' 
+		}
+	}
+	
+	    stage ('Deploy to Tomcat')  {
+	        steps{
+        echo "deploying to tomcat"
+        deploy adapters: [tomcat9(credentialsId: 'war-deploy-tomcat', path: '', url: 'http://13.201.28.175:8080')], contextPath: null, war: '**/*.war'
+        }
+        }
+}
+}
