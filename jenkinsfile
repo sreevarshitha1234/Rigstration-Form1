@@ -8,13 +8,13 @@ pipeline
 	stages{
 		stage('Code Checkout'){
 			steps{
-				git branch: 'main', url: 'https://github.com/sreevarshitha1234/Rigstration-Form.git'
+				git branch: 'main', url: 'https://github.com/sreevarshitha1234/Rigstration-Form1.git'
 
 			}
 		}
        stage("SonarQube analysis") {
             steps {
-              withSonarQubeEnv('war-deploy') {
+              withSonarQubeEnv('jenkins-pipeline') {
                 sh 'mvn clean install sonar:sonar'
               }
             }
@@ -71,7 +71,7 @@ pipeline
 	    stage ('Deploy to Tomcat')  {
 	        steps{
         echo "deploying to tomcat"
-        deploy adapters: [tomcat9(credentialsId: 'war-deploy-tomcat', path: '', url: 'http://13.201.28.175:8080')], contextPath: null, war: '**/*.war'
+        deploy adapters: [tomcat9(credentialsId: 'jenkins-pipeline', path: '', url: 'http://192.168.121.129:8080')], contextPath: null, war: '**/*.war'
         }
         }
 }
