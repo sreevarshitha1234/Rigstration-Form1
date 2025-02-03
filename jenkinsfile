@@ -71,7 +71,7 @@ pipeline
 	    stage ('Deploy to Tomcat')  {
 	        steps{
         echo "deploying to tomcat"
-        deploy adapters: [tomcat9(credentialsId: 'jenkins-pipeline', path: '', url: 'http://192.168.121.129:8080')], contextPath: null, war: '**/*.war'
+        deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://192.168.121.129:8080')], contextPath: null, war: '**/*.war'
         }
         }
 }
